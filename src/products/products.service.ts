@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import { Injectable } from '@nestjs/common';
 import { db, Product } from './../db';
 import { v4 as uuidv4 } from 'uuid';
@@ -20,5 +21,14 @@ export class ProductsService {
     const newProduct = { ...productData, id: uuidv4() };
     db.products.push(newProduct);
     return newProduct;
+  }
+
+  public updateById(id: Product['id'], productData: Omit<Product, 'id'>): void {
+    db.products = db.products.map((product) => {
+      if (product.id === id) {
+        return { ...product, ...productData };
+      }
+      return product;
+    });
   }
 }

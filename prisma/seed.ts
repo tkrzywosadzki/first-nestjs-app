@@ -78,6 +78,12 @@ function getOrders() {
 
 async function seed() {
   await Promise.all(
+    getProducts().map((product) => {
+      return db.product.create({ data: product });
+    }),
+  );
+
+  await Promise.all(
     getClients().map((client) => {
       return db.client.create({ data: client });
     }),
